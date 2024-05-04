@@ -85,7 +85,7 @@
 
                             <div class = btn >
                                 <img  src="{% static '\assests\mentordashboard\his.svg' %}" alt="Logo 1">
-                                <a class="link" href="{% url 'history_page' %}"><button class="loginbutton">Test History</button></a>
+                                <a class="link" href="{% url 'stuhistory_page' %}"><button class="loginbutton">Test History</button></a>
                             </div>
 
                             <div class = btn >
@@ -118,9 +118,9 @@
                         <div class = "head">
                            
                             <button class="hbt" onclick="showContent(1)">Classrooms</button>
-                            <button class="hbt" onclick="showContent(1)">Ongoing Test</button>
-                            <button class="hbt" onclick="showContent(2)">Activity</button>
-                            <button class="hbt" onclick="showContent(3)">Quick Links</button>
+                            <button class="hbt" onclick="showContent(2)">Ongoing Test</button>
+                            <button class="hbt" onclick="showContent(3)">Activity</button>
+                            <button class="hbt" onclick="showContent(4)">Quick Links</button>
                             <button class="hbt" onclick="showContent(5)">Calendar</button>
                         </div>
                        
@@ -131,83 +131,6 @@
                             <div id="content1" class="low">
                                    
                                 {% include 'feed_component.html' %}
-                                <!-- <div class="card2">
-
-                                    <img src="{% static '\assests\mentordashboard\bro.svg' %}" alt="cimg">
-                                    <div class="cinfo">
-                                        <h style="font-size: 24px;"><b>Operating Systems</b></h><br><br>
-
-                                        Learn the operating systems concepts and mechanism in details and their implementation.
-
-                                    </div>
-                                    <div class="abtn">
-                                        <a href="classroom.html"><button class="cibtn" >></button></a>
-                                    </div>
-                                    
-    
-                                </div>
-
-                                <div class="card2">
-                                     <img src="{% static '\assests\mentordashboard\ai.svg' %}" alt="cimg">
-                                    <div class="cinfo">
-                                        <h style="font-size: 24px;"><b>Artificial Intelligence</b></h><br><br>
-
-                                        Intelligence demonstrated by machines, unlike the natural intelligence displayed by human.
-
-                                    </div>
-                                    <div class="abtn">
-                                        <button class="cibtn">></button>
-                                    </div>
-                                </div>
-
-                                <div class="card2">
-                                    <img src="{% static '\assests\mentordashboard\crdimg.png' %}" alt="cimg">
-                                    <div class="cinfo">
-                                        <h style="font-size: 24px;"><b>Software Engineering</b></h><br><br>
-
-                                        Learn detailed of engineering to the design, development and maintainece of softeare.
-
-                                    </div>
-                                    <div class="abtn">
-                                        <button class="cibtn">></button>
-                                    </div>
-                                </div>
-                                <div class="card2">
-                                    <img src="{% static '\assests\mentordashboard\crdimg.png' %}" alt="cimg">
-                                    <div class="cinfo">
-                                        <h style="font-size: 24px;"><b>Computer Networks</b></h><br><br>
-
-                                        Learn the operating systems concepts and mechanism in details and their implementation.
-
-                                    </div>
-                                    <div class="abtn">
-                                        <button class="cibtn">></button>
-                                    </div>
-                                </div>
-                                <div class="card2">
-                                    <img src="{% static '\assests\mentordashboard\crdimg.png' %}" alt="cimg">
-                                    <div class="cinfo">
-                                        <h style="font-size: 24px;"><b>Data Structures</b></h><br><br>
-
-                                        Learn the operating systems concepts and mechanism in details and their implementation.
-
-                                    </div>
-                                    <div class="abtn">
-                                        <button class="cibtn">></button>
-                                    </div>
-                                </div>
-                                <div class="card2">
-                                    <img src="{% static '\assests\mentordashboard\db.svg' %}" alt="cimg">
-                                    <div class="cinfo">
-                                        <h style="font-size: 24px;"><b>D.B.M.S</b></h><br><br>
-
-                                        Learn the operating systems concepts and mechanism in details and their implementation.
-
-                                    </div>
-                                    <div class="abtn">
-                                        <button class="cibtn">></button>
-                                    </div>
-                                </div> -->
 
 
                             </div>

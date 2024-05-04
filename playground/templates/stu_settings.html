@@ -1,6 +1,6 @@
 {% include 'stu_bar.html' %}
 {% load static %}
-
+<title>Settings | A-Lab</title>
 <style>
     :root {
         --bg: #EDF2F0;
@@ -468,6 +468,12 @@
       border: 0;
       background: none;
     }
+    .circular-img {
+        width: 150px; /* Adjust the width and height as needed */
+        height: 150px;
+        border-radius: 50%; /* This makes the image circular */
+        overflow: hidden; /* Hide any overflow from the circular shape */
+    }
 
 </style>
 <script>
@@ -484,6 +490,20 @@
         function googleTranslateElementInit() {
           new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');}
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('image-input').addEventListener('change', function(event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function(event) {
+                document.getElementById('pro_img').src = event.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        });
+    });
+</script>
     <div class = "head">
 
         <button class="hbt" onclick="showContent(1)">Personal Info</button>
@@ -491,12 +511,12 @@
         <button class="hbt" onclick="showContent(3)">Change Language</button>
     </div>
 
-    <div id = "content1" class="low">
-            <h1 style=" font-size: 26px; text-align: center;">UPDATE PROFILE</h1>
-            <div class="img_prof">
-                <img title="User Image" src="{% static '\assests\mentordashboard\prof.svg' %}" id = "pro_img" alt="Image">
-                <input style="margin-left: 100px;" type="file" accept="image/*" id="image-input">
-            </div>
+    <div id="content1" class="low">
+        <h1 style="font-size: 26px; text-align: center;">MY PROFILE</h1>
+        <div class="img_prof">
+            <img class="circular-img" title="User Image" id="pro_img" src="{% static '\assests\mentordashboard\prof.svg' %}" alt="Image">
+            <input style="margin-left: 100px;" type="file" accept="image/*" id="image-input">
+        </div>
             
 
             <div class="sec">

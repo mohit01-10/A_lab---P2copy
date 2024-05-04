@@ -41,8 +41,12 @@ from django.template.loader import get_template
 from django.template import Context
 from xhtml2pdf import pisa
 from .models import TestAttemptQuestion
-
+from django.http import FileResponse
+import os
+import numpy as np
+import pandas as pd
 # Very first page of the Website before login or sign up
+
 def landing_page(request):
     return render(request,'landingpage.html')
 
@@ -137,6 +141,8 @@ def stu_settings_page(request):
 #history
 def history_page(request):
     return render(request,'history.html')
+def stu_history_page(request):
+    return render(request,'stu_examhistory.html')
 
 #calander
 def calander_page(request):
@@ -171,28 +177,26 @@ def generate(request):
     que_type = request.form['que_type']
 
     # Call the function to generate responses
-    responses = get_lama_response(input_text, subject, no_que, que_type)
+    response_file_path = get_lama_response(input_text, subject, no_que, que_type)
 
-    # Save the generated questions to an Excel file
-    # save_to_excel(responses)
-
-    return render('result.html', responses=responses)
+    # Return the text file as a response
+    return FileResponse(open(response_file_path, 'rb'))
 
 
 def get_lama_response(input_text, subject, no_que, que_type, max_token_length=512):
-    llm = CTransformers(model='/Users/mohit/Documents/GitHub/ALAB/playground/model/llama-2-7b-chat.ggmlv3.q8_0.bin',
+    llm = CTransformers(model='model\llama-2-7b-chat.ggmlv3.q8_0.bin',
                         model_type='llama',
                         config={'max_new_tokens': 256, 'temperature': 0.1})
 
     template = """
         Generate {no_que} {que_type} questions and four options including correct answer on 
-        subject/topic {subject} for the given topics: {input_text} in format
+        subject/topic {subject} for the given passage: {input_text} in format
         question: Question?
         option a: ...
-        option b: ...c
-        option c: ...
+        option b: ...
+        6option c: ...
         option d: ...
-        correct Answer: ... 
+        correct Answer: ...
         """
 
     prompt = PromptTemplate(input_variables=["no_que", "que_type", "subject", "input_text"],
@@ -206,7 +210,30 @@ def get_lama_response(input_text, subject, no_que, que_type, max_token_length=51
         response = llm(prompt.format(no_que=no_que, que_type=que_type, subject=subject, input_text=chunk))
         responses.append(response)
 
-    return responses
+    output_file = 'generated_responses.txt'
+    with open(output_file, 'w') as file:
+        for response in responses:
+            file.write(response + '\n\n')
+
+    # Return the file path
+    return output_file
+
+def download_generated_responses(request):
+    # Define the path to the generated_responses.txt file
+    file_path = 'generated_responses.txt'
+
+    # Check if the file exists
+    if os.path.exists(file_path):
+        # Open the file in binary mode
+        with open(file_path, 'rb') as file:
+            # Create an HttpResponse with the file as content
+            response = HttpResponse(file.read(), content_type='text/plain')
+            # Set the file's Content-Disposition header to force download
+            response['Content-Disposition'] = 'attachment; filename=generated_responses.txt'
+            return response
+    else:
+        # If the file does not exist, return a 404 response
+        return HttpResponse('File not found', status=404)
 
 # Dashboard   
 @login_required(login_url='login')
@@ -248,18 +275,35 @@ def classroom(request, pk):
         test_attempt__student=request.user
     ).aggregate(average_time=Avg('time_taken'))['average_time'] or 0
 
-    print(average_time_per_question)
+    round(average_time_per_question, 2)
+        
 
     # data visualization
     test_titles = [score.test.title for score in test_scores]
     test_scores_values = [score.score for score in test_scores]
+    # for score in test_scores:
+    #     if pd.isna(score.score):  # Check if the score is NaN
+    #         test_scores_values.append(0)  # Append 0 if NaN
+    #     else:
+    #         test_scores_values.append(score.score)  # Append the actual score
+    # test_scores_values = np.nan_to_num(test_scores_values)
+
+    # # Filter out zero values
+    # non_zero_indices = [i for i, value in enumerate(test_scores_values) if value!= 0]
+    # non_zero_test_scores_values = [test_scores_values[i] for i in non_zero_indices]
+    # non_zero_test_titles = [test_titles[i] for i in non_zero_indices]
 
     # pie chart
     # plt.figure(figsize=(8, 3))
     # # plt.legend(loc="upper center", bbox_to_anchor=(1, 0.5), title="Test Titles")
-    # plt.pie(test_scores_values, labels=test_titles, autopct='%1.1f%%')
-    # plt.title('Test Scores Distribution')
-    # plt.axis('equal')
+    # if non_zero_test_scores_values:  # Only plot if there are non-zero values
+    #     plt.pie(non_zero_test_scores_values, explode=None, labels=non_zero_test_titles, autopct='%1.1f%%', shadow=True, startangle=90)
+    #     plt.title('Test Scores Distribution')
+    #     plt.axis('equal')
+    #     plt.show()
+    # else:
+    #     # Display a message or plot a different chart when all values are zero
+    #     print("No scores to display. Please check your data.")
 
 
     # # convert plot to bytes and embed in HTML
@@ -350,7 +394,8 @@ def take_test(request, pk, test_id, question_index):
     classroom = Classroom.objects.get(id=pk)
     test = Test.objects.get(pk=test_id)
     questions = test.question_set.all().order_by('id')
-
+    print("here inside test")
+    print("here inside test")
     if request.method == 'POST':
         option_selected = request.POST.get('option_selected')
         current_question_index = int(request.POST.get('current_question_index'))
@@ -395,7 +440,7 @@ def take_test(request, pk, test_id, question_index):
                 'question_index': question_index,
             })
 
-    return render(request, 'classroom.html', {'classroom': classroom, 'tests': classroom.test_set.all().order_by('created')})
+    return render(request, 'classroomcopy.html', {'classroom': classroom, 'tests': classroom.test_set.all().order_by('created')})
 
 def calculate_and_redirect_score(request, test, student, classroom):
     try:
@@ -423,7 +468,7 @@ def calculate_and_redirect_score(request, test, student, classroom):
 @login_required(login_url='login')
 def student_report(request, classroom_id, student_id):
 
-    print("hello1")
+    print("hello")
     student = User.objects.get(id=student_id)
     classroom = Classroom.objects.get(id=classroom_id)
     print("hello")
@@ -432,22 +477,23 @@ def student_report(request, classroom_id, student_id):
     # Extract test names and scores for plotting
     test_names = [score.test.title for score in test_scores]
     scores = [score.score for score in test_scores]
+    scores = [score if not pd.isna(score) else 0 for score in scores]
 
     # Generate pie chart
-    # plt.figure(figsize=(8, 8))
-    # plt.pie(scores, labels=test_names, autopct='%1.1f%%')
-    # plt.title('Test Scores')
-    # plt.savefig('test_scores_pie_chart.png')
+    plt.figure(figsize=(8, 8))
+    plt.pie(scores, labels=test_names, autopct='%1.1f%%')
+    plt.title('Test Scores')
+    plt.savefig('test_scores_pie_chart.png')
 
-    # # Generate bar chart
-    # plt.figure(figsize=(10, 6))
-    # plt.bar(test_names, scores, color='skyblue')
-    # plt.xlabel('Tests')
-    # plt.ylabel('Scores')
-    # plt.title('Test Scores')
-    # plt.xticks(rotation=45)
-    # plt.tight_layout()
-    # plt.savefig('test_scores_bar_chart.png')
+    # Generate bar chart
+    plt.figure(figsize=(10, 6))
+    plt.bar(test_names, scores, color='skyblue')
+    plt.xlabel('Tests')
+    plt.ylabel('Scores')
+    plt.title('Test Scores')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.savefig('test_scores_bar_chart.png')
 
     context = {
         'student': student,
@@ -455,7 +501,6 @@ def student_report(request, classroom_id, student_id):
         'test_scores': test_scores,
     }
     return render(request, 'student_report.html', context)
-
 
 from django.db.models import Prefetch
 from collections import defaultdict
@@ -587,4 +632,3 @@ def createClassroom(request):
 def logout_page(request):
     logout(request)
     return render(request, 'logout.html')
-

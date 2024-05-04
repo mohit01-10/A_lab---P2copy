@@ -443,31 +443,6 @@ document.addEventListener('keyup', (e) => {
         }
     });
         
-        function fun_Logout() {
-            swal.fire({
-                title: 'Are you sure?',
-                text: "Do you really want to logout?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, Logout me!',
-                cancelButtonText: 'No!',
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#202124',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Redirect to the login page
-                    window.location.href = "file:///Users/mohit/Desktop/New%20folder%20(9)/login.html";
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    swal.fire(
-                        'Cancelled',
-                        'Logout cancelled.',
-                        'error'
-                    )
-                }
-            });
-        }
-        
 </script>
     <div class="parent">
 

@@ -1,6 +1,8 @@
 {% include 'stu_bar.html' %}
 {% load static %}
-<title>Notifications | A-Lab</title>
+{% block content %}
+<title>Exam History | A-Lab</title>
+
 <style>
     :root {
         --bg: #EDF2F0;
@@ -181,7 +183,6 @@
 
     .drawer{
         max-width: 224px;
-        min-width: 200px;
         width: 100%;
         height: 100%;
         border-radius: 10px 10px 0 0;
@@ -217,8 +218,6 @@
     }
     .midcontent{
         height: 100%;
-        width: 100%;
-        max-width: 1000px;
         max-height: 724px;
         border-radius: 10px 10px 0 0;
         display: flex;
@@ -233,6 +232,7 @@
         gap: 10px;
         background-color: #91D7FF;
         border-radius: 4px 4px 4px 4px;
+        width: max-content;
     }
     .hbt{
         background-color: #C6F8FF;
@@ -550,7 +550,7 @@
         font-family: 'Arial';
     }
     .template {
-        background-image: url("tem1.svg");
+        background-image: url("{% static '\assests\mentordashboard\tem1.svg' %}");
         width: 900px;
         background-size: cover; /* This property makes the image cover the entire container */
         background-position: center; 
@@ -603,119 +603,214 @@
         display: flex;
         flex-direction: column;
     }
-    .notifics{
-        width: 100%;
-        border-radius: 10px 10px 0 0;
-        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-        display: flex;
-        flex: 2;
-        background-image: url("{% static '\assests\mentordashboard\fadedraf.svg' %}");
-        background-size: contain;
-        flex-direction: column;
-        background-repeat: no-repeat;
-        background-position-x: center;
-        background-position-y: 10px;
-        padding: 60px;
-        background-color: #A3CDFF;
-        gap: 20px;
+    .tab{
+        margin-top: 5px;
+        background-color: white;
+        border-collapse: collapse;
+        width: 900px;
+        max-width: 100%;
+        font-size: 16px;
+        white-space: nowrap;
+        font-family: "Google Sans","Roboto",Arial,sans-serif;
+        font-weight: 500;    
+        color: #3c4043;
+        
     }
-    #no-notifications {
-        font-size: 17px;
-        padding-top: 5px;
-        text-align: center;
-        color: #5a7699;
-        display: flex;
+    .tr{
+        border-top: 0;
+        height: 60px;  
+        
     }
+    .itm {
+    border: 0.0625rem solid rgb(111, 70, 206);
+    padding: 0.5rem;
+    text-align: left;
+    padding-left: 10%;
 
-    .notification_con {
-        padding: 20px;
-        border: 1px solid #ccc;
-        background-color: #ffffff;
-        border-radius: 10px; 
-        margin-left: 20px;
-        font-size: 17px;
-        font-family: Helvetica;
-        animation: fadeIn 2s;
+     }
+     .thead{
         display: flex;
         flex-direction: row;
-        align-items: center;
-        gap: 1rem;
+        justify-content: space-between;
+        background-color: white;
+        border-radius: 10px;
+        border: 0.0625rem solid rgb(111, 70, 206);
         
+     }
+    .rowcount{
+        border-top: 0;
+        height: 60px;
+        background-color: white;
+        color: rgb(111, 70, 206);
+        border-radius: 10px;
+        padding: 10px;
+        text-align: right;
+        margin-left: 20px;
+        margin-right: 20px;
+     }
+
+     .custom-table {
+        margin-top: 5px;
+        background-color: white;
+        border-collapse: collapse;
+        width: 900px;
+        max-width: 100%;
+        font-size: 16px;
+        white-space: nowrap;
+        font-family: "Google Sans","Roboto",Arial,sans-serif;
+        font-weight: 500;    
+        color: #3c4043;
+        border: 0.0625rem solid rgb(111, 70, 206);
+    }
+    .itm2{
+        border: 0.0625rem solid rgb(111, 70, 206);
+        padding: 0.5rem;
+        text-align: center;
+    }
+    table {   
+        counter-reset: rowNumber;
+    }
+    table tr {
+        counter-increment: rowNumber;
+    }
+    table tr td:first-child::before {   
+        content: counter(rowNumber) ".";   
+        min-width: 1em;   
+        margin-right: 0.5em;
     }
     .hmpage{
       border: 0;
       background: none;
     }
-
-
-    @keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+    .low1{
+        display: flex;
+        flex-direction: column;
+        background-color: transparent;
+        gap: 20px;
+        height: 700px; /* Set the maximum height for the scrollable container */
+        overflow-y: scroll;
+        padding: 10px;
+        max-width: 920px;
     }
-
-
+    
 
 </style>
+                            <div class = "head">
 
-<div class = "notifics">
-    <div id="no-notifications">
-        <p>You have no notifications.</p>
+                                <button class="hbt" onclick="showContent(1)">Stream</button>
+                                <button class="hbt" onclick="showContent(2)">Class work</button>
+                                <button class="hbt" onclick="showContent(3)">People</button>
+                                <button class="hbt" onclick="showContent(4)">All Test</button>
+
+                            </div>
+
+                        <div id = "content1" class="low">
+                            <div class="template">
+                                {{classroom.name}} <h4 style="color: black; font-family: Arial, Helvetica, sans-serif;"><b>Mentor: {{classroom.host.username}}</b></h4>
+                            </div>
+                            <!-- {{classroom.description}} -->
+                            <div class = "anc">
+                                <div class="inp">
+                                    <textarea id="textarea" placeholder="Announce something to your class"  name="textarea" rows="4" cols="200"></textarea>
+                                    <div style=" display:flex; align-items: end; margin-top: 10px;">
+                                        <button class="hbt" >Cancel</button>
+                                        <button class="hbt" >Post</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class ="mssg">
+                                This is a demo annoucement.
+                            </div>
+                            <div class ="mssg">
+                                <a href="https://www.geeksforgeeks.org/">This is a demo annoucement with a link </a>
+                            </div>
+
+                           
+
+                        </div>
+                        <div id = "content2" class="hidden">
+                        
+                        </div>
+                        
+
+                        <div id="content3" class=" hidden">
+                           <div class = "thead"> 
+                                <div class="rowcount">Batch : </div>
+                                <div id="rowcount" class="rowcount"></div> 
+                          </div>
+                            <div class="low" style="padding: 0;">
+                                <table class ="tab">
+                                   <tbody>
+                                
+                                    <tr class="tr">
+                                        <td class = "itm">
+                                   
+                                                SANAT JAIN 211054 
+                                         
+                                        </td>
+                                        <td class="itm2">211054</td>
+                                        <td class = "itm">mail@gamil.com</td>
+                                    </tr>
+                                    <tr class="tr">
+                                        <td class = "itm">
+                                            
+                                                ANUSHREE SINGH 211168 
+                                            
+                                        </td>
+                                        <td class="itm2">211168</td>
+                                        <td class = "itm">mailadcecwec@gamil.com</td>
+                                    </tr>
+                                    <tr class="tr">
+                                        <td class = "itm">
+                                           
+                                                SHIVANSH MEHROTRA 211202
+                                           
+                                        </td>
+                                        <td class="itm2">211202</td>
+                                        <td class = "itm">newmywmailamail@gamil.com</td>
+                                    </tr>
+                                    <tr class="tr">
+                                        <td class = "itm">
+                                                                                        
+                                                Dhruv Yadav 211403
+                                         
+                                        </td>
+                                        <td class="itm2">211403</td>
+                                        <td class = "itm">newmywmailamail@gamil.com</td>
+                                    </tr>
+                                   </tbody>
+                                    
+                                </table>
+                            </div>
+                        </div>
+                            
+                        <div id = "content4" class="hidden">
+                            <div class="low1">
+                              
+                                {% include 'test_component.html' %}
+                              
+                              </div>
+
+                          </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+       </div>
+
     </div>
-
-     <!-- NOtifications -->
-
-    <div class="notification_con">
-        <img src="{% static '\assests\mentordashboard\notif.svg' %}">
-        <div class="notification-content">Notification content 1.</div>
-    </div>
-
-    <div class="notification_con">
-        <img src="{% static '\assests\mentordashboard\notif.svg' %}">
-        <div class="notification-content">Notification content 2.</div>
-    </div>
-
-    <div class="notification_con">
-        <img src="{% static '\assests\mentordashboard\notif.svg' %}">
-        <div class="notification-content">Notification content 3.</div>
-    </div>
-
-    <div class="notification_con">
-        <img src="{% static '\assests\mentordashboard\notif.svg' %}">
-        <div class="notification-content">Notification content 4.</div>
-    </div>
-
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-
-
-</div>
-
 <script>
-function showNotification(notificationId) {
-document.getElementById('no-notifications').style.display = 'none';
-document.getElementById(notificationId).style.display = 'block';
-}
+    document.addEventListener("DOMContentLoaded", function() {
+    var table = document.querySelector(".tab");
+    var rowCount = table.rows.length;
+    document.getElementById("rowcount").textContent = rowCount + "    Students" ;
+});
 
-let currentIndex = 1;
-const delayBetweenNotifications = 0; // 3 seconds
-
-function displayNextNotification() {
-showNotification(`notification-container-${currentIndex}`);
-currentIndex = (currentIndex % 4) + 1; 
-
-setTimeout(displayNextNotification, delayBetweenNotifications);
-}
-
-// Start displaying notifications
-displayNextNotification();
 </script>
-
 </body>
 </html>
+
+{% endblock content %}

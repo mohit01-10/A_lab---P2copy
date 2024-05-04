@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Krona One:wght@400&display=swap"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ABeeZee:wght@400&display=swap"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <title>Profile | A-Lab</title>
+    
     <link rel="icon" type="image/x-icon" href="{% static '/logo.ico' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -59,7 +59,7 @@
                             <li>
                                 <a href="{% url 'stuprofile_page' %}">My profile</a>
                             </li>
-                            <li><a href="{% url 'settings_page' %}">Settings</a></li>
+                            <li><a href="{% url 'stusettings_page' %}">Settings</a></li>
                             <li><a href="{% url 'logout' %}">Logout</a></li>
                         </ul>
                     </li>
@@ -90,7 +90,7 @@
 
                             <div class = btn >
                                 <img  src="{% static '\assests\mentordashboard\his.svg' %}" alt="Logo 1">
-                                <a class="link" href="{% url 'history_page' %}"><button class="loginbutton">Test History</button></a>
+                                <a class="link" href="{% url 'stuhistory_page' %}"><button class="loginbutton">Test History</button></a>
                             </div>
 
                             <div class = btn >

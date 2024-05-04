@@ -21,6 +21,7 @@ urlpatterns = [
     path('settings_page/',views.settings_page,name='settings_page'),
     path('stusettings_page/',views.stu_settings_page,name='stusettings_page'),
     path('history_page/',views.history_page,name='history_page'),
+    path('stuhistory_page/',views.stu_history_page,name='stuhistory_page'),
     path('genq_page/',views.genq_page,name='genq_page'),
     path('notification_page/',views.notification_page,name='notification_page'),
     path('stunotification_page/',views.stunotification_page,name='stunotification_page'),
@@ -36,4 +37,5 @@ urlpatterns = [
 
     path('test/<int:test_id>/report/', views.test_report, name='test_report'),
     path('test/<int:test_id>/report/download/', views.download_test_report_pdf, name='download_test_report_pdf'),
+    path('download/', views.download_generated_responses, name='download_generated_responses'),
 ]

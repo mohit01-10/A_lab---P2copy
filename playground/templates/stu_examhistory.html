@@ -1,6 +1,7 @@
 {% include 'stu_bar.html' %}
 {% load static %}
-<title>Profile | A-Lab</title>
+<title>Exam History | A-Lab</title>
+
 <style>
     :root {
         --bg: #EDF2F0;
@@ -55,18 +56,18 @@
     .contain{
         display: flex;
         align-items: flex-start;
-        flex-direction: row; /* Arrange elements side by side */
+        flex-direction: row; 
         gap: 50px;
         justify-content: space-between;
-        width: 100%; /* Ensure full width */
+        width: 100%; 
     }
 
     .text {
-        flex: 1; /* Allow text to take up remaining space */
+        flex: 1; 
     }
 
     .text h1 {
-        font-size: 34px;
+        font-size: 18px;
         margin: 0;
         padding: 5px;
     }
@@ -81,7 +82,7 @@
         height: auto;
     }
     .box{
-        flex-direction: row; /* Stack elements in mobile view */
+        flex-direction: row; 
         display: flex;
         gap:70px;
         text-align: center;
@@ -107,10 +108,14 @@
         transition: text-decoration 0.3s ease;
         background-color: #fff;
     }
+    .link{
+        color: #000;
+        text-decoration: none;
+    }
  
     @media (max-width: 768px) {
         .child1 {
-            flex-direction: column; /* Stack elements in mobile view */
+            flex-direction: column; 
             align-items: center;
             text-align: center;
         }
@@ -129,7 +134,7 @@
             align-items: center;
         }
         .contain{
-            flex-direction: row; /* Stack elements in mobile view */
+            flex-direction: row; 
             align-items: flex-start;
             gap: 20px;
         }
@@ -143,7 +148,13 @@
             max-height: 532.6px;
         }
     }        
-
+    .header{
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+    
     .image-container {
         display: flex;
     flex-direction: row;
@@ -174,6 +185,7 @@
         width: 100%;
         height: 100%;
         border-radius: 10px 10px 0 0;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
         display: flex;
         flex: 1;
         flex-direction: column;
@@ -205,67 +217,35 @@
         justify-content: space-between;
     }
     .midcontent{
-        width: 100%;
-        max-width: 882px;
-        border-radius: 10px 10px 0 0;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        padding: 10px;
-        
-    }
-    .head{
-        display: flex;
-        flex-direction: row;
-        padding: 5px;
-        gap: 10px;
-        background-color: #91D7FF;
-        border-radius: 4px 4px 4px 4px;
-        width: max-content;
-    }
-    .hbt{
-        background-color: #C6F8FF;
-        text-align: center;
-        border-radius: 4px 4px 4px 4px;
-        border:0;
-        cursor: pointer;
-        padding: 5px 10px;
-        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-        font-size: 11px;
-    }
-    .hbt:hover{
-        text-decoration: underline;
-        transition: text-decoration 0.3s ease;
-        background-color: #fff;
-    }
-    .low{
         max-width: 882px;
         width: 100%;
         border-radius: 10px 10px 0 0;
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
         display: flex;
         flex: 2;
-        background-image: url("{% static '\assests\mentordashboard\fadedraf.svg' %}");
-        background-size: 1050px 900px;
+        background-image: url("fadedraf.svg");
+        background-size: contain;
         flex-direction: column;
         background-repeat: no-repeat;
         background-position-x: center;
         background-position-y: 10px;
-        padding: 60px;
-        gap: 18px;
+        padding: 70px;
+        height: 600px;
+        overflow-y: scroll;
         background-color: #A3CDFF;
+        
     }
-    .createexm{
+    .exmid{
         border-radius: 10px 10px 10px 10px;
-        padding: 6px;
         font-size: 18px;
+        padding: 6px;
         font-family: "ABeeZee";
         opacity: 0.8;
     }
     .vbtn{
         border-radius: 15px 15px 15px 15px;
         padding: 6px;
-        background-color: #8187FF;
+        background-color:#8187FF;
         color: #000;
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
         border: 0;
@@ -274,68 +254,6 @@
         text-decoration: underline;
         transition: text-decoration 0.3s ease;
         background-color: #fff;
-    }
-
-    
-    .checkbox-container {
-        display: block;
-        position: relative;
-        padding-left: 35px;
-        cursor: pointer;
-        font-size: 20px;
-        user-select: none;
-        line-height: 25px;
-    }
-
-    .checkbox-container input {
-        position: absolute;
-        opacity: 0;
-        cursor: pointer;
-        height: 0;
-        width: 0;
-    }
-
-    .checkmark {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 25px;
-        width: 25px;
-        background-color: #eee;
-        border-radius: 50%; /* Makes it circular */
-        border: 2px solid #555;
-    }
-
-    .checkbox-container:hover input ~ .checkmark {
-        background-color: #ccc;
-    }
-
-    .checkbox-container input:checked ~ .checkmark {
-        background-color: #2196F3;
-    }
-
-    .checkmark:after {
-        content: "";
-        position: absolute;
-        display: none;
-    }
-
-    .checkbox-container input:checked ~ .checkmark:after {
-        display: block;
-    }
-
-    .checkbox-container .checkmark:after {
-        left: 9px;
-        top: 5px;
-        width: 5px;
-        height: 10px;
-        border: solid white;
-        border-width: 0 3px 3px 0;
-        transform: rotate(45deg);
-    }
-    .link{
-        color: #000;
-        text-decoration: none;
     }
     .navbar{
         display: flex;
@@ -358,12 +276,15 @@
         padding: 10px 20px;
         text-decoration: none;
     }
+
+
     /* Style the dropdown menu */
     .navbar ul ul {
         position: absolute;
         display: none;
         background-color: var(--white);
     }
+
     .navbar ul ul li {
         display: block;
         font-size: 11px;
@@ -375,12 +296,40 @@
         width: max-content;
 
     }
+
     /* Change the background color of dropdown links on hover */
     .navbar ul ul li a:hover {
         background-color: #8187FF;
         text-decoration: underline;
     }
-    
+
+    .custom-table {
+        margin-top: 5px;
+        background-color: white;
+        border-collapse: collapse;
+        width: 900px;
+        max-width: 100%;
+        font-size: 16px;
+        white-space: nowrap;
+        font-family: "Google Sans","Roboto",Arial,sans-serif;
+        font-weight: 500;    
+        color: #3c4043;
+        border: 0.0625rem solid rgb(111, 70, 206);
+    }
+
+    .custom-table th {
+        border: 1px solid black;
+        padding: 5px;
+        text-align: center; 
+    }
+
+    .custom-table td {
+        border: 1px solid black;
+        padding: 5px;
+        text-align: center; 
+        border: 0.0625rem solid rgb(111, 70, 206);
+    }
+
     .btn a {
         display: inline-block; /* Prevent anchor from collapsing to its content size */
         margin: 0; /* Remove any margin */
@@ -395,9 +344,10 @@
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
         font-size: 11px;
     }
-      
+
     .search-container {
         float: right;
+        
       }
       
       .search-container input[type=text] {
@@ -426,119 +376,120 @@
       .search-container button:hover {
         background: #ccc;
       }
-      .header{
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: space-between;
-    }
-    .img_prof{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        padding: 20px;
-        font-size: 11px;
-        
-    }
-    .sec{
-        display: flex;
-        flex-direction:row;
-        gap: 40px;
-        padding: 20px;
-    }
-    .leftinfo, .rightinfo{
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        
-    }
-    .hidden {
-        display: none;
-    }
-    .lcont{
-        display: flex;
-        flex-direction: column;
-        padding: 40px;
-        gap: 10px;
-        border-radius: 4px 4px 4px 4px;
-        background-color: #A3CDFF;
-    }
-    .hmpage{
+      .hmpage{
       border: 0;
       background: none;
     }
-
-    .circular-img {
-        width: 150px; /* Adjust the width and height as needed */
-        height: 150px;
-        border-radius: 50%; /* This makes the image circular */
-        overflow: hidden; /* Hide any overflow from the circular shape */
-    }
-    
-
 </style>
-<div id="content1" class="low">
-    <h1 style="font-size: 26px; text-align: center;">MY PROFILE</h1>
-    <div class="img_prof">
-        <img class="circular-img" title="User Image" id="pro_img" src="{% static '\assests\mentordashboard\prof.svg' %}" alt="Image">
-    </div>
-            
 
-            <div class="sec">
-                <div class="leftinfo">
-                        <label style="font-size: 16px; text-align: left;" for="name">Name</label>
-                        <input class="createexm" type="text" id="name"><br>
-
-                        <label style="font-size: 16px; text-align: left;" for="gender">Gender</label>
-                        <select class="createexm" id="gender" name="gender">
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
-                            <option value="not-disclosed">Do Not Wish to Disclose</option>
-                        </select><br>
-
-                        <label style="font-size: 16px; text-align: left;" for="grade">Grade</label>
-                        <select class="createexm" id="grade" name="grade">
-                            <option value="g6-8">Grades 6-8</option>
-                            <option value="g9-12">Grades 9-12</option>
-                            <option value="g">Graduate</option>
-                            <option value="pg">Post Graduate</option>
-                            <option value="doc">Doctorate</option>
-                            <option value="prof">Professional</option>
-                            <option value="other">Other</option>
-                        </select><br>
-                    
-                        <label style="font-size: 16px; text-align: left;" for="mobile">Phone </label>
-                        <input type="tel" class=" createexm phone-number" id="mobile" style="width: 100%;" placeholder="Mobile Number" required>
-                </div>
-                <div class="rightinfo">
-                    <label style="font-size: 16px; text-align: left;" for="username">UserName</label>
-                    <input class="createexm" type="text" id="username"><br>
-
-                    <label style="font-size: 16px; text-align: left;" for="instituion">Institution</label>
-                    <input class="createexm" type="text" id="instituion"><br>
-
-                    <label style="font-size: 16px; text-align: left;" for="affilation">Affilation</label>
-                        <select class="createexm" id="affilation" name="affilation">
-                            <option value="g6-8">CBSE</option>
-                            <option value="g9-12">ICSE</option>
-                            <option value="g">State Board</option>
-                            <option value="pg">Other</option>
-                        </select><br>
-
-                    <label style="font-size: 16px; text-align: left;" for="email">E-mail</label>
-                    <input class="createexm" type="email" id="email"><br>
-
-                </div>
-            </div>
-            <br>
-
-            
-        </div>
-  
+<h1 style="font-size: 26px; text-align: center;">EXAM HISTORY</h1><br>
+                        
+<!-- Apply the CSS class to the table -->
+<table class="custom-table">
+    <thead>
+        <tr>
+            <th>Test ID</th>
+            <th>Subject</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Sample data rows, replace with actual data -->
+        <tr>
+            <td>1</td>
+            <td>Operating System</td>
+            <td>14-09-2023</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Applied Material Science</td>
+            <td>15-09-2023</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>DSA</td>
+            <td>16-09-2023</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>DSA</td>
+            <td>16-09-2023</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>DSA</td>
+            <td>16-09-2023</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>DSA</td>
+            <td>16-09-2023</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>DSA</td>
+            <td>16-09-2023</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>DSA</td>
+            <td>16-09-2023</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>DSA</td>
+            <td>16-09-2023</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>DSA</td>
+            <td>16-09-2023</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>DSA</td>
+            <td>16-09-2023</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>DSA</td>
+            <td>16-09-2023</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>DSA</td>
+            <td>16-09-2023</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>DSA</td>
+            <td>16-09-2023</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>DSA</td>
+            <td>16-09-2023</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>DSA</td>
+            <td>16-09-2023</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>DSA</td>
+            <td>16-09-2023</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>DSA</td>
+            <td>16-09-2023</td>
+        </tr>
+        <!-- Add more rows as needed -->
+    </tbody>
+</table>
 </div>
+
 </div>
 </div>
 
@@ -546,5 +497,4 @@
 
 </div>
 </body>
-
 </html>
