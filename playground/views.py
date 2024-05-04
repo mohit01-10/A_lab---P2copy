@@ -253,6 +253,7 @@ def dashboard(request):
 # Classrooms
 @login_required(login_url='login')
 def classroom(request, pk):
+
     classroom = Classroom.objects.get(id=pk)
     classroom_messages = classroom.message_set.all().order_by('created')
     tests = classroom.test_set.all().order_by('created')
@@ -328,6 +329,8 @@ def classroom(request, pk):
     return render(request,'classroom.html',context)
 
 
+
+
 # creating a test
 @login_required(login_url='login')
 def create_test(request, classroom_id):
@@ -364,18 +367,75 @@ def classroom_detail(request, classroom_id):
     classroom_messages = classroom.message_set.all().order_by('created')
     tests = classroom.test_set.all().order_by('created')
     participants = classroom.participants.all()
+    test_scores = TestScore.objects.filter(student=request.user)
+    # questions = test.question_set.all().order_by('id')
     test_data = []
 
     for test in tests:
-        # counts the number questions in each test
-        num_questions = test.question_set.count()
+        num_questions = test.question_set.count()  # Count the number of questions in each test
         test_data.append({'test': test, 'num_questions': num_questions})
+        
+    # calculate average score
+    total_tests = test_scores.count()
+    total_score = test_scores.aggregate(total=Sum('score'))['total'] or 0
+    average_score = total_score / total_tests if total_tests > 0 else 0
+
+    # calculating average time taken for a particular question
+    average_time_per_question = TestAttemptQuestion.objects.filter(
+        test_attempt__student=request.user
+    ).aggregate(average_time=Avg('time_taken'))['average_time'] or 0
+
+    round(average_time_per_question, 2)
+        
+
+    # data visualization
+    test_titles = [score.test.title for score in test_scores]
+    test_scores_values = [score.score for score in test_scores]
+    # for score in test_scores:
+    #     if pd.isna(score.score):  # Check if the score is NaN
+    #         test_scores_values.append(0)  # Append 0 if NaN
+    #     else:
+    #         test_scores_values.append(score.score)  # Append the actual score
+    # test_scores_values = np.nan_to_num(test_scores_values)
+
+    # # Filter out zero values
+    # non_zero_indices = [i for i, value in enumerate(test_scores_values) if value!= 0]
+    # non_zero_test_scores_values = [test_scores_values[i] for i in non_zero_indices]
+    # non_zero_test_titles = [test_titles[i] for i in non_zero_indices]
+
+    # pie chart
+    # plt.figure(figsize=(8, 3))
+    # # plt.legend(loc="upper center", bbox_to_anchor=(1, 0.5), title="Test Titles")
+    # if non_zero_test_scores_values:  # Only plot if there are non-zero values
+    #     plt.pie(non_zero_test_scores_values, explode=None, labels=non_zero_test_titles, autopct='%1.1f%%', shadow=True, startangle=90)
+    #     plt.title('Test Scores Distribution')
+    #     plt.axis('equal')
+    #     plt.show()
+    # else:
+    #     # Display a message or plot a different chart when all values are zero
+    #     print("No scores to display. Please check your data.")
+
+
+    # # convert plot to bytes and embed in HTML
+    # buffer = BytesIO()
+    # plt.savefig(buffer, format='png')
+    # buffer.seek(0)
+    # image_base64 = base64.b64encode(buffer.getvalue()).decode()
+    # plt.close()
+
+    # pie_chart = f'data:image/png;base64,{image_base64}'
     
     context = {'classroom': classroom, 
                'classroom_messages': classroom_messages,
                'participants': participants,
-               'test_data':test_data}
-    return render(request, 'classroomcopy.html', context)
+               'test_data':test_data,
+               'tests': tests,
+               'test_scores': test_scores,
+               'average_score': average_score,
+               'average_time_per_question': average_time_per_question,
+            #    'pie_chart': pie_chart,
+               }
+    return render(request,'classroom.html',context)
 
 @login_required(login_url='login')
 def show_test(request, pk, test_id):

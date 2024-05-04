@@ -1,8 +1,5 @@
 
 
-
-
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -408,8 +405,22 @@
                <div class= hr1></div>&nbsp;
 
                <div class = "cont">
-                    <div  class="image-container">
-                        <lottie-player src="https://lottie.host/35adf6eb-9bd7-47fb-8f0c-ee0868df2f97/DAqXMTJFH5.json" background="transparent" speed="1" style="width: 321px; height: 322px" direction="1" mode="normal" loop autoplay></lottie-player>
+                    <div  class="image-container" id = "image-container2" >
+                        <!-- <lottie-player src="https://lottie.host/35adf6eb-9bd7-47fb-8f0c-ee0868df2f97/DAqXMTJFH5.json" background="transparent" speed="1" style="width: 321px; height: 322px" direction="1" mode="normal" loop autoplay></lottie-player> -->
+                        <script>
+                            var animation = bodymovin.loadAnimation({
+                            container: document.getElementById('image-container2'),
+                            path: "{% static '\assests\landing_p\anim2.json' %}",
+                            renderer: 'svg',
+                            loop: true,
+                            autoplay: true,
+                            background: "transparent",
+                            speed: 1,
+                            name: "Demo Animation",
+                            width: 321,
+                            height: 322,
+                            });             
+                        </script>
                     </div>
 
                     <div class="text" >
@@ -436,8 +447,22 @@
 
                     </div>
 
-                    <div  class="image-container">
-                        <lottie-player src="https://lottie.host/fd451f12-95f4-4653-a856-981c6249cd62/R5p2tqleUz.json" background="transparent" speed="1" style="width: 350px; height: 350px" direction="1" mode="normal" loop autoplay></lottie-player>
+                    <div  class="image-container" id = "image-container3">
+                        <!-- <lottie-player src="https://lottie.host/fd451f12-95f4-4653-a856-981c6249cd62/R5p2tqleUz.json" background="transparent" speed="1" style="width: 350px; height: 350px" direction="1" mode="normal" loop autoplay></lottie-player> -->
+                        <script>
+                            var animation = bodymovin.loadAnimation({
+                            container: document.getElementById('image-container3'),
+                            path: "{% static '\assests\landing_p\anim3.json' %}",
+                            renderer: 'svg',
+                            loop: true,
+                            autoplay: true,
+                            background: "transparent",
+                            speed: 1,
+                            name: "Demo Animation",
+                            width: 350,
+                            height: 350,
+                            });             
+                        </script>
                     </div>
                 </div>
            </div><br>
@@ -521,8 +546,22 @@
                         </form>
                     </div>
 
-                    <div  class="image-container" style="margin-right: 120px;">
-                        <lottie-player src="https://lottie.host/c555d6dc-3c19-4eca-a9b1-fbff9e82ea1a/EFWeDiM4fZ.json" background="transparent" speed="1" style="width: 401px; height: 401px" direction="1" mode="normal" loop autoplay></lottie-player>
+                    <div  class="image-container" id="image-container4" style="margin-right: 120px;">
+                        <!-- <lottie-player src="https://lottie.host/c555d6dc-3c19-4eca-a9b1-fbff9e82ea1a/EFWeDiM4fZ.json" background="transparent" speed="1" style="width: 401px; height: 401px" direction="1" mode="normal" loop autoplay></lottie-player> -->
+                        <script>
+                            var animation = bodymovin.loadAnimation({
+                            container: document.getElementById('image-container4'),
+                            path: "{% static '\assests\landing_p\anim4.json' %}",
+                            renderer: 'svg',
+                            loop: true,
+                            autoplay: true,
+                            background: "transparent",
+                            speed: 1,
+                            name: "Demo Animation",
+                            width: 401,
+                            height: 401,
+                            });             
+                        </script>
                     </div>
                 </div>
             </div><br>
